@@ -1,6 +1,8 @@
 const username = 'RyoooooouGit';
+const retryTime = 3000;
 
 document.addEventListener('DOMContentLoaded', async (event) => {
+    await sleep(500); // 等待0.5秒
     repoNum = await fetchRepoCount();
     repoList = await fetchRepos();
     generateButtons(repoNum, repoList);
@@ -8,59 +10,95 @@ document.addEventListener('DOMContentLoaded', async (event) => {
 
 async function fetchRepoCount() {
     const url = `https://api.github.com/users/${username}`;
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+    let data = null;
+    let fetchSuccess = false;
+    let times = 0;
+    while (!fetchSuccess) {
+        times++;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            data = await response.json();
+            fetchSuccess = true;
+        } catch (error) {
+            console.log(`Trying to fetch github repo count for ${times} times, failed.`);
+            await sleep(retryTime);
         }
-        const data = await response.json();
-        return data.public_repos - 1; // -1 是为了去除RyoooooouGit.github.io这一仓库
-    } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
     }
+    console.log(`Trying to fetch github repo count for ${times} times, succeed.`);
+    return data.public_repos - 1; // -1 是为了去除RyoooooouGit.github.io这一仓库
 }
 
 async function fetchRepos() {
     const url = `https://api.github.com/users/${username}/repos`;
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+    let data = null;
+    let fetchSuccess = false;
+    let times = 0;
+    while (!fetchSuccess) {
+        times++;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            data = await response.json();
+            fetchSuccess = true;
+        } catch (error) {
+            console.log(`Trying to fetch github repo list for ${times} times, failed.`);
+            await sleep(retryTime);
         }
-        const data = await response.json();
-        const dataWithoutRepoIO = data.filter(item => item.name !== 'RyoooooouGit.github.io');
-        return dataWithoutRepoIO;
-    } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
     }
+    console.log(`Trying to fetch github repo list for ${times} times, succeed.`);
+    let dataWithoutRepoIO = data.filter(item => item.name !== 'RyoooooouGit.github.io');
+    return dataWithoutRepoIO;
 }
 
 async function fetchRepoDescription(repoName) {
     const url = `https://api.github.com/repos/${username}/${repoName}`;
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+    let data = null;
+    let fetchSuccess = false;
+    let times = 0;
+    while (!fetchSuccess) {
+        times++;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            data = await response.json();
+            fetchSuccess = true;
+        } catch (error) {
+            console.log(`Trying to fetch github ${repoName}'s description for ${times} times, failed.`);
+            await sleep(retryTime);
         }
-        const data = await response.json();
-        return data.description;
-    } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
     }
+    console.log(`Trying to fetch github ${repoName}'s description for ${times} times, succeed.`);
+    return data.description;
 }
 
 async function fetchRepoLastCommit(repoName) {
     const url = `https://api.github.com/repos/${username}/${repoName}/commits`;
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+    let data = null;
+    let fetchSuccess = false;
+    let times = 0;
+    while (!fetchSuccess) {
+        times++;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            data = (await response.json())[0].commit.message;
+            fetchSuccess = true;
+        } catch (error) {
+            console.log(`Trying to fetch github ${repoName}'s last commit for ${times} times, failed.`);
+            await sleep(retryTime);
         }
-        const data = (await response.json())[0].commit.message;
-        return data;
-    } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
     }
+    console.log(`Trying to fetch github ${repoName}'s last commit for ${times} times, succeed.`);
+    return data;
 }
 
 async function generateButton(isLeft, repoName) {
@@ -75,14 +113,14 @@ async function generateButton(isLeft, repoName) {
     innerDiv.className = 'innerBackground';
 
     let smallerFontDiv = document.createElement('div');
-    smallerFontDiv.className = 'smallerFont';
+    smallerFontDiv.className = 'font1_20px';
     smallerFontDiv.textContent = repoName;
 
     let hr = document.createElement('hr');
     hr.style.color = 'white';
 
     let tinyFontDiv = document.createElement('div');
-    tinyFontDiv.className = 'tinyFont';
+    tinyFontDiv.className = 'font1_10px';
 
     let descriptionText = document.createTextNode(await fetchRepoDescription(repoName));
     let br = document.createElement('br');
@@ -102,6 +140,9 @@ async function generateButton(isLeft, repoName) {
 
 async function generateButtons(number, repoList) {
     const container = document.getElementsByClassName('containerForButtons')[0];
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
     let lineContainer = null;
     for (let i = 0; i < number; i++) {
         let repoName = repoList[i].name;
@@ -124,4 +165,9 @@ async function generateButtons(number, repoList) {
             container.appendChild(br);
         }
     }
+}
+
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
