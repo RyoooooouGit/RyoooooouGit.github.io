@@ -1,0 +1,57 @@
+    .outerBackground,
+    .outerBackground_buttonToGithub {
+        background-color: rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: 20px;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        border-radius: 3px;
+    }
+
+    .outerBackground_buttonToGithub:hover {
+        transform: scale(1.1);
+    }
+
+    .innerBackground {
+        width: calc(100% - 100px);
+    }
+
+    .tinyFont {
+        font-family: Avant Garde, Avantgarde, Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+        text-align: center;
+        font-size: 10px;
+        color: white;
+    }
+
+    .smallerFont {
+        font-family: Avant Garde, Avantgarde, Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+        text-align: center;
+        font-size: 20px;
+        color: white;
+    }
+
+    .biggerFonts {
+        font-family: Copperplate, Copperplate Gothic Light, fantasy;
+        text-align: center;
+        font-size: 30px;
+        color: white;
+    }
+
+    .containerForALine {
+        display: flex;
+    }
+
+    .left {
+        flex: 1;
+    }
+
+    .right {
+        width: 49%;
+        margin-left: 2%;
+    }
+
+    a {
+        text-decoration: none;
+    }

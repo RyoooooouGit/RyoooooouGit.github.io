@@ -1,3 +1,8 @@
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="src.js"></script>
+</head>
+
 <body style="background: black">
     <div class="outerBackground">
         <div class="innerBackground">
@@ -13,91 +18,36 @@
         </div>
     </div>
     <br>
-    <div class="container">
-        <div class="left">
-            <a class="outerBackground_buttonToGithub" href="https://github.com/RyoooooouGit/Karel">
-                <div class="innerBackground">
-                    <div class="smallerFont">
-                        Karel
+    <div class="containerForButtons">
+        <!--
+        <div class="containerForALine">
+            <div class="left">
+                <a class="outerBackground_buttonToGithub" href="https://github.com/RyoooooouGit/Karel">
+                    <div class="innerBackground">
+                        <div class="smallerFont">
+                            Karel
+                        </div>
+                        <hr style="color: white">
+                        <div class="tinyFont">
+                            2023 | A little sokoban-like game written in java
+                        </div>
                     </div>
-                    <hr style="color: white">
-                    <div class="tinyFont">
-                        2023 | A little sokoban-like game written in java
+                </a>
+            </div>
+            <div class="right">
+                <a class="outerBackground_buttonToGithub" href="https://github.com/RyoooooouGit/LittleYellow">
+                    <div class="innerBackground">
+                        <div class="smallerFont">
+                            Little Yellow
+                        </div>
+                        <hr style="color: white">
+                        <div class="tinyFont">
+                            2022 | The final project with genetic algorithm of class Program Designing
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
-        <div class="right">
-            <a class="outerBackground_buttonToGithub" href="https://github.com/RyoooooouGit/LittleYellow">
-                <div class="innerBackground">
-                    <div class="smallerFont">
-                        Little Yellow
-                    </div>
-                    <hr style="color: white">
-                    <div class="tinyFont">
-                        2022 | The final project with genetic algorithm of class Program Designing
-                    </div>
-                </div>
-            </a>
-        </div>
+    -->
     </div>
 </body>
-
-<style>
-    .outerBackground,
-    .outerBackground_buttonToGithub {
-        background-color: rgba(255, 255, 255, 0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-        padding: 20px;
-        transition: transform 0.3s ease, background-color 0.3s ease;
-    }
-
-    .outerBackground_buttonToGithub:hover {
-        transform: scale(1.1);
-    }
-
-    .innerBackground {
-        width: calc(100% - 100px);
-    }
-
-    .tinyFont {
-        font-family: Avant Garde, Avantgarde, Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-        text-align: center;
-        font-size: 10px;
-        color: white;
-    }
-
-    .smallerFont {
-        font-family: Avant Garde, Avantgarde, Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-        text-align: center;
-        font-size: 20px;
-        color: white;
-    }
-
-    .biggerFonts {
-        font-family: Copperplate, Copperplate Gothic Light, fantasy;
-        text-align: center;
-        font-size: 30px;
-        color: white;
-    }
-
-    .container {
-        display: flex;
-    }
-
-    .left {
-        flex: 1;
-    }
-
-    .right {
-        width: 49%;
-        margin-left: 2%;
-    }
-
-    a {
-        text-decoration: none;
-    }
-</style>
