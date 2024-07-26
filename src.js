@@ -14,7 +14,7 @@ async function fetchRepoCount() {
             throw new Error('Network response was not ok ' + response.statusText);
         }
         const data = await response.json();
-        return data.public_repos;
+        return data.public_repos - 1; // -1 是为了去除RyoooooouGit.github.io这一仓库
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
     }
@@ -28,7 +28,8 @@ async function fetchRepos() {
             throw new Error('Network response was not ok ' + response.statusText);
         }
         const data = await response.json();
-        return data;
+        const dataWithoutRepoIO = data.filter(item => item.name !== 'RyoooooouGit.github.io');
+        return dataWithoutRepoIO;
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
     }
@@ -48,13 +49,27 @@ async function fetchRepoDescription(repoName) {
     }
 }
 
+async function fetchRepoLastCommit(repoName) {
+    const url = `https://api.github.com/repos/${username}/${repoName}/commits`;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const data = (await response.json())[0].commit.message;
+        return data;
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+    }
+}
+
 async function generateButton(isLeft, repoName) {
     let div = document.createElement('div');
     div.className = isLeft ? 'left' : 'right';
 
     let link = document.createElement('a');
     link.className = 'outerBackground_buttonToGithub';
-    link.href = 'https://github.com/RyoooooouGit/' + repoName;
+    link.href = `https://github.com/RyoooooouGit/${repoName}`;
 
     let innerDiv = document.createElement('div');
     innerDiv.className = 'innerBackground';
@@ -68,8 +83,14 @@ async function generateButton(isLeft, repoName) {
 
     let tinyFontDiv = document.createElement('div');
     tinyFontDiv.className = 'tinyFont';
-    tinyFontDiv.textContent = await fetchRepoDescription(repoName);
 
+    let descriptionText = document.createTextNode(await fetchRepoDescription(repoName));
+    let br = document.createElement('br');
+    let lastUpdateText = document.createTextNode("Last Update | " + await fetchRepoLastCommit(repoName));
+
+    tinyFontDiv.appendChild(descriptionText);
+    tinyFontDiv.appendChild(br);
+    tinyFontDiv.appendChild(lastUpdateText);
     innerDiv.appendChild(smallerFontDiv);
     innerDiv.appendChild(hr);
     innerDiv.appendChild(tinyFontDiv);
@@ -83,7 +104,8 @@ async function generateButtons(number, repoList) {
     const container = document.getElementsByClassName('containerForButtons')[0];
     let lineContainer = null;
     for (let i = 0; i < number; i++) {
-        let repoName = repoList[i].name; let buttonDiv = null;
+        let repoName = repoList[i].name;
+        let buttonDiv = null;
         if (i % 2 == 0) {
             const newDiv = document.createElement('div');
             newDiv.classList.add('containerForALine');
