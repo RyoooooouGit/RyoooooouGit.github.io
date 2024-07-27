@@ -1,7 +1,22 @@
 const username = 'RyoooooouGit';
 const retryTime = 3000;
 
+
+const imagePaths = [];
+for (let i = 0; i <= 30; i++) {
+    imagePaths.push(`graph/star1/${i}.png`);
+}
+
+let imageElements = null;
+
 document.addEventListener('DOMContentLoaded', async (event) => {
+    generateBGImage();
+
+    imageElements = document.getElementsByClassName('sequenceImage');
+    for (let i = 0; i < imageElements.length; i++) {
+        startImageSequence(imageElements[i], Math.floor(Math.random() * imagePaths.length));
+    }
+
     randomKarel();
 
     const sectionTitles = document.querySelectorAll('.sectionTitle');
@@ -18,6 +33,15 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     repoList = await fetchRepos();
     generateButtons(repoNum, repoList);
 });
+
+function generateBGImage() {
+    const bgContainer = document.getElementsByClassName('backgroundContainer')[0];
+    for (let i = 0; i < 30; i++) {
+        let img = document.createElement('img');
+        img.className = 'sequenceImage';
+        bgContainer.appendChild(img);
+    }
+}
 
 async function fetchRepoCount() {
     const url = `https://api.github.com/users/${username}`;
@@ -205,7 +229,7 @@ async function generateButtons(number, repoList) {
         }
         lineContainer.appendChild(buttonDiv);
 
-        if (i % 2 != 0 || i == number - 1) {
+        if (i % 2 != 0 && i != number - 1) {
             container.appendChild(lineContainer);
             let br = document.createElement('br');
             container.appendChild(br);
@@ -217,3 +241,17 @@ async function generateButtons(number, repoList) {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+
+
+function showNextImage(img, index) {
+    img.src = imagePaths[index];
+}
+
+function startImageSequence(img, startIndex) {
+    setInterval(() => {
+        showNextImage(img, startIndex);
+        startIndex = (startIndex + 1) % imagePaths.length;
+    }, 100);
+}
+
