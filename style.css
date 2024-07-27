@@ -6,7 +6,7 @@
     justify-content: center;
     box-sizing: border-box;
     padding: 20px;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    transition: transform 0.3s ease;
     border-radius: 3px;
 }
 
@@ -54,12 +54,34 @@
 }
 
 .sectionTitle {
-    font-family: Copperplate, Copperplate Gothic Light, fantasy;
+    user-select: none;
+    font-family: Arial Black, Arial Bold, Gadget, sans-serif;
     text-align: center;
     font-size: 30px;
     color: white;
 }
 
+.containerForAllSection {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.5, 0.1, 0.5, 0.9);
+}
+
+.containerForAllSection.show {
+    max-height: 300px;
+}
+
+.karel {
+    scale: 0.5;
+    position: absolute;
+    transform-origin: center;
+    filter: drop-shadow(10px 10px 30px rgba(0, 0, 0, 0.5));
+}
+
 a {
     text-decoration: none;
+}
+
+body {
+    overflow: hidden;
 }

@@ -2,6 +2,17 @@ const username = 'RyoooooouGit';
 const retryTime = 3000;
 
 document.addEventListener('DOMContentLoaded', async (event) => {
+    randomKarel();
+
+    const sectionTitles = document.querySelectorAll('.sectionTitle');
+    const containers = document.querySelectorAll('.containerForAllSection');
+
+    sectionTitles.forEach((title, index) => {
+        title.addEventListener('click', () => {
+            containers[index].classList.toggle('show');
+        });
+    });
+
     await sleep(500); // 等待0.5秒
     repoNum = await fetchRepoCount();
     repoList = await fetchRepos();
@@ -99,6 +110,41 @@ async function fetchRepoLastCommit(repoName) {
     }
     console.log(`Trying to fetch github ${repoName}'s last commit for ${times} times, succeed.`);
     return data;
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function randomKarel() {
+    const img = document.getElementById('karel');
+    const angle = getRandomInt(0, 360);
+    const edge = getRandomInt(0, 2); // 0: right, 1: bottom, 2: left
+    const imgWidth = img.offsetWidth;
+    const imgHeight = img.offsetHeight;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    let top, left;
+
+    switch (edge) {
+        case 0: // right
+            top = getRandomInt(-imgHeight / 2, vh - imgHeight / 2);
+            left = vw - imgWidth / 5 * 3;
+            break;
+        case 1: // bottom
+            top = vh - imgHeight / 5 * 3;
+            left = getRandomInt(-imgWidth / 2, vw - imgWidth / 2);
+            break;
+        case 2: // left
+            top = getRandomInt(-imgHeight / 2, vh - imgHeight / 2);
+            left = -imgWidth / 5 * 2;
+            break;
+    }
+
+    img.style.top = `${top}px`;
+    img.style.left = `${left}px`;
+    img.style.transform = `rotate(${angle}deg)`;
 }
 
 async function generateButton(isLeft, repoName) {
