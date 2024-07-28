@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async (event) => {
 
     imageElements = document.getElementsByClassName('sequenceImage');
     for (let i = 0; i < imageElements.length; i++) {
-        startImageSequence(imageElements[i], Math.floor(Math.random() * imagePaths.length));
+        startImageSequence(imageElements[i], getRandomInt(0, 30), getRandomInt(90, 110));
     }
 
     randomKarel();
@@ -249,10 +249,10 @@ function showNextImage(img, index) {
     img.src = imagePaths[index];
 }
 
-function startImageSequence(img, startIndex) {
+function startImageSequence(img, startIndex, timeBetweenFrame) {
     setInterval(() => {
         showNextImage(img, startIndex);
         startIndex = (startIndex + 1) % imagePaths.length;
-    }, 100);
+    }, timeBetweenFrame);
 }
 
