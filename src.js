@@ -39,6 +39,7 @@ function generateBGImage() {
     for (let i = 0; i < 30; i++) {
         let img = document.createElement('img');
         img.className = 'sequenceImage';
+        img.style = `transform: translate(${getRandomInt(-25, 0)}%, ${getRandomInt(-25, 0)}%);`;
         bgContainer.appendChild(img);
     }
 }
