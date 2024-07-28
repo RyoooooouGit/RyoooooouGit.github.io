@@ -61,14 +61,34 @@
     color: white;
 }
 
-.containerForAllSection {
+.containerForAllSectionInner {
+    padding-top: 0;
+    padding-bottom: 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.5, 0.1, 0.5, 0.9);
+    transition:
+        padding-top 0.5s,
+        padding-bottom 0.5s,
+        max-height 0.5s cubic-bezier(0.5, 0.1, 0.5, 0.9);
 }
 
-.containerForAllSection.show {
+.containerForAllSectionInner.show {
     max-height: 300px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.containerForAllSectionOuter {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition:
+        padding-top 0.5s,
+        padding-bottom 0.5s;
+}
+
+.containerForAllSectionOuter.show {
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .karel {

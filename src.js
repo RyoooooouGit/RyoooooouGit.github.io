@@ -20,11 +20,13 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     randomKarel();
 
     const sectionTitles = document.querySelectorAll('.sectionTitle');
-    const containers = document.querySelectorAll('.containerForAllSection');
+    const innerSectionContainers = document.querySelectorAll('.containerForAllSectionInner');
+    const outerSectionContainers = document.querySelectorAll('.containerForAllSectionOuter');
 
     sectionTitles.forEach((title, index) => {
         title.addEventListener('click', () => {
-            containers[index].classList.toggle('show');
+            innerSectionContainers[index].classList.toggle('show');
+            outerSectionContainers[index].classList.toggle('show');
         });
     });
 
