@@ -223,29 +223,33 @@ async function generateButton(isLeft, repoName) {
 
 async function generateButtons(number, repoList) {
     const container = document.getElementsByClassName('containerForButtons')[0];
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
+    const innerSectionContainer = container.parentElement;
     let lineContainer = null;
     for (let i = 0; i < number; i++) {
         let repoName = repoList[i].name;
         let buttonDiv = null;
         if (i % 2 == 0) {
+            buttonDiv = await generateButton(true, repoName);
+            if (i == 0) {
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+            }
             const newDiv = document.createElement('div');
             newDiv.classList.add('containerForALine');
             container.appendChild(newDiv);
             lineContainer = newDiv;
-
-            buttonDiv = await generateButton(true, repoName);
         } else {
             buttonDiv = await generateButton(false, repoName);
         }
         lineContainer.appendChild(buttonDiv);
 
+        generateContainerHeight(innerSectionContainer);
+
         if (i % 2 != 0 && i != number - 1) {
-            container.appendChild(lineContainer);
             let br = document.createElement('br');
             container.appendChild(br);
+            generateContainerHeight(innerSectionContainer);
         }
     }
 }
