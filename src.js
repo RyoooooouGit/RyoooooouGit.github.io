@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     sectionTitles.forEach((title, index) => {
         title.addEventListener('click', () => {
             innerSectionContainers[index].classList.toggle('show');
+            generateContainerHeight(innerSectionContainers[index]);
             outerSectionContainers[index].classList.toggle('show');
         });
     });
@@ -35,6 +36,15 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     repoList = await fetchRepos();
     generateButtons(repoNum, repoList);
 });
+
+async function generateContainerHeight(container) {
+    if (container.classList.contains('show')) {
+        var innerHeight = container.children[0].offsetHeight;
+        container.style.maxHeight = innerHeight + 'px';
+    } else {
+        container.style.maxHeight = '0px';
+    }
+}
 
 function generateBGImage() {
     const bgContainer = document.getElementsByClassName('backgroundContainer')[0];
