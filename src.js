@@ -197,7 +197,7 @@ async function generateButton(isLeft, repoName) {
 
     let smallerFontDiv = document.createElement('div');
     smallerFontDiv.className = 'font1_20px';
-    smallerFontDiv.textContent = repoName;
+    smallerFontDiv.textContent = convertRepoNameWithSpace(repoName);
 
     let hr = document.createElement('hr');
     hr.style.color = 'white';
@@ -219,6 +219,21 @@ async function generateButton(isLeft, repoName) {
     div.appendChild(link);
 
     return div;
+}
+
+function convertRepoNameWithSpace(repoName) {
+    str = repoName;
+    for (let i = 0; i < str.length - 1; i++) {
+        if ((isLowerCase(str[i]) && !isLowerCase(str[i + 1])) || (i != str.length - 2 && !isLowerCase(str[i]) && !isLowerCase(str[i + 1]) && isLowerCase(str[i + 2]))) {
+            str = str.slice(0, i + 1) + ' ' + str.slice(i + 1);
+            i++;
+        }
+    }
+    return str;
+}
+
+function isLowerCase(char) {
+    return char >= 'a' && char <= 'z';
 }
 
 async function generateButtons(number, repoList) {
